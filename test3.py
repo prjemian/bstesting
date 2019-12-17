@@ -55,7 +55,8 @@ def move(motor, label, dest, delay_s):
         m1,             dest
         )
     msg = f"{label}:  {dest} {motor.position}"
-    print(msg, os.system("uptime"))
+    # print(msg, os.system("uptime"))
+    print(msg)
     yield from bps.sleep(delay_s)
 
 i = 0
