@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# MS VS Code editor
+.vscode/
+
+# eclipse PyDev project
+.project
+.pydevproject
+
+# session logs
+ipython_*.log*
