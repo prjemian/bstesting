@@ -11,11 +11,15 @@ from databroker import Broker
 import epics
 import logging
 from ophyd import Component, EpicsMotor, EpicsSignal, EpicsSignalRO
+import sys
 import time
 
 # logging.basicConfig(level=logging.DEBUG)
 REPETITIONS = 10
-CYCLES = 25
+if len(sys.argv) == 1:
+    CYCLES = 25
+elif len(sys.argv) == 2:
+    CYCLES = int(sys.argv[1])
 DELAY_S = 1e-6
 
 bec = BestEffortCallback()
