@@ -11,7 +11,7 @@ from databroker import Broker
 import epics
 import logging
 from ophyd import Component, EpicsMotor, EpicsSignal, EpicsSignalRO
-import stdlogpj
+# import stdlogpj
 import sys
 import time
 
@@ -27,21 +27,23 @@ if len(sys.argv) == 1:
 elif len(sys.argv) == 2:
     CYCLES = int(sys.argv[1])
 DELAY_S = 1e-6
+# MOTOR = "sky:m1"
+MOTOR_PV = "prj:m1"
 
 bec = BestEffortCallback()
 # db = Broker.named("mongodb_config")
 sd = SupplementalData()
 pbar_manager = ProgressBarManager()
 
-RE = RunEngine({}})
+RE = RunEngine({})
 # RE = RunEngine(get_history())
-RE.subscribe(db.insert)
+# RE.subscribe(db.insert)
 RE.subscribe(bec)
 RE.preprocessors.append(sd)
 RE.waiting_hook = pbar_manager
 
 
-m1 = EpicsMotor("sky:m1", name="m1")
+m1 = EpicsMotor(MOTOR_PV, name="m1")
 m1.wait_for_connection()
 
 
@@ -51,7 +53,7 @@ def move(motor, label, dest, delay_s):
         #m1.description, f"{label}",
         m1,             dest
         )
-    msg = "{label}:  {dest} {motor.position}"
+    msg = f"{label}:  {dest} {motor.position}"
     print(msg)
     yield from bps.sleep(delay_s)
 
