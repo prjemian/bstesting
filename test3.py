@@ -55,13 +55,23 @@ def move(motor, label, dest, delay_s):
     print(msg)
     yield from bps.sleep(delay_s)
 
-
-def ping_pong(motor, v1, v2, cycles=100, delay_s=1e-2):
-    for i in range(cycles):
-        yield from move(m1, f"ping {i+1}", v1, delay_s)
-        yield from move(m1, f"pong {i+1}", v2, delay_s)
+i = 0
+def ping_pong(motor, v1, v2, delay_s=1e-2):
+    global i
+    yield from move(motor, f"ping {i+1}", v1, delay_s)
+    yield from move(motor, f"pong {i+1}", v2, delay_s)
+    i += 1
 
 
 if __name__ == "__main__":
-    RE(ping_pong(m1, .1, -.1, cycles=CYCLES, delay_s=DELAY_S))
+    RE(
+        bps.repeater(
+            CYCLES,
+            ping_pong,
+            m1, 
+            .1, 
+            -.1, 
+            delay_s=DELAY_S,
+            )
+    )
 
