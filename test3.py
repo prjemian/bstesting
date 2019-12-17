@@ -11,6 +11,7 @@ from databroker import Broker
 import epics
 import logging
 from ophyd import Component, EpicsMotor, EpicsSignal, EpicsSignalRO
+import os
 # import stdlogpj
 import sys
 import time
@@ -54,7 +55,7 @@ def move(motor, label, dest, delay_s):
         m1,             dest
         )
     msg = f"{label}:  {dest} {motor.position}"
-    print(msg)
+    print(msg, os.system("uptime"))
     yield from bps.sleep(delay_s)
 
 i = 0
