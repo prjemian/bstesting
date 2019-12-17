@@ -11,13 +11,14 @@ from databroker import Broker
 import epics
 import logging
 from ophyd import Component, EpicsMotor, EpicsSignal, EpicsSignalRO
+import stdlogpj
 import sys
 import time
 
-# logging.basicConfig(level=logging.DEBUG)
-REPETITIONS = 10
+logging.basicConfig(level=logging.DEBUG)
+# logger = stdlogpj.standard_logging_setup("test3", level=logging.DEBUG)
 if len(sys.argv) == 1:
-    CYCLES = 25
+    CYCLES = 10
 elif len(sys.argv) == 2:
     CYCLES = int(sys.argv[1])
 DELAY_S = 1e-6
@@ -35,8 +36,7 @@ RE.waiting_hook = pbar_manager
 
 
 m1 = EpicsMotor("sky:m1", name="m1")
-while not m1.connected:
-    time.sleep(.05)
+m1.wait_for_connection()
 
 
 def move(motor, label, dest, delay_s):
@@ -45,13 +45,7 @@ def move(motor, label, dest, delay_s):
         #m1.description, f"{label}",
         m1,             dest
         )
-    msg = (
-        f"{label}:"
-        # f" ({motor.travel_direction.get()})"
-        # f" ({motor.motor_done_move.get()})"
-        f"  {dest}"
-        f" {motor.position}"
-        )
+    msg = "{label}:  {dest} {motor.position}"
     print(msg)
     yield from bps.sleep(delay_s)
 
