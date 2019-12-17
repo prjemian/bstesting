@@ -15,7 +15,12 @@ import stdlogpj
 import sys
 import time
 
-logging.basicConfig(level=logging.DEBUG)
+# import ophyd
+# logger = logging.getLogger('ophyd.event_dispatcher')
+# logger.setLevel("DEBUG")
+
+
+# logging.basicConfig(level=logging.DEBUG)
 # logger = stdlogpj.standard_logging_setup("test3", level=logging.DEBUG)
 if len(sys.argv) == 1:
     CYCLES = 10
@@ -24,11 +29,12 @@ elif len(sys.argv) == 2:
 DELAY_S = 1e-6
 
 bec = BestEffortCallback()
-db = Broker.named("mongodb_config")
+# db = Broker.named("mongodb_config")
 sd = SupplementalData()
 pbar_manager = ProgressBarManager()
 
-RE = RunEngine(get_history())
+RE = RunEngine({}})
+# RE = RunEngine(get_history())
 RE.subscribe(db.insert)
 RE.subscribe(bec)
 RE.preprocessors.append(sd)
