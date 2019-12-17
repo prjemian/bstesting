@@ -8,7 +8,7 @@ See:
 
 ## conda environment
 
-    conda create -yn bsmotor bluesky ophyd databroker epics-base -c nsls2forge
+    conda create -yn bsmotor bluesky ophyd databroker epics-base ipython -c nsls2forge
 
 This results in these installed packages from `nsls2forge` channel:
 
