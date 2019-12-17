@@ -27,8 +27,8 @@ if len(sys.argv) == 1:
 elif len(sys.argv) == 2:
     CYCLES = int(sys.argv[1])
 DELAY_S = 1e-6
-# MOTOR = "sky:m1"
-MOTOR_PV = "prj:m1"
+MOTOR_PV = "sky:m1"
+# MOTOR_PV = "prj:m1"
 
 bec = BestEffortCallback()
 # db = Broker.named("mongodb_config")
