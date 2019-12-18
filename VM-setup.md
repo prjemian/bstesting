@@ -1,7 +1,7 @@
 # building VM
 
 1. download `linuxmint-19.2-mate-64bit.iso` from linuxmint.com
-   1. https://linuxmint.com/release.php?id=35 for release 19.2
+   1. visit https://linuxmint.com/release.php?id=35 for release 19.2
    2. choose *MATE (64-bit)*
    3. choose a download mirror
 2. create VM in VirtualBox with these settings
@@ -29,15 +29,21 @@
 4. `mkdir ~/bin` (`~.profile` should will add to `PATH` at **next Restart**)
 5. `mkdir ~/Apps` for linux packages such as EPICS, VSCode, and miniconda
 6. install Microsoft Visual Studio Code editor
-   1. https://code.visualstudio.com/Download#
-   2. `cd ~/Apps`
-   3. `tar xzf ~/Downloads/code-stable-1576089840.tar.gz`
-   4. `mv VSCode-linux-x64{,-stable-1576089840}`
-   5. `ln -s VSCode-linux-x64-stable-1576089840 VSCode`
-   6. `cd ~/bin`
-   7. `ln -s ~/Apps/VSCode/bin/code ./`
+   1. visit https://code.visualstudio.com/Download#
+   2. download latest .tar.gz for linux 64-bit
+   3. install locally
+   
+      ```
+      cd ~/Apps`
+      tar xzf ~/Downloads/code-stable-1576089840.tar.gz`
+      mv VSCode-linux-x64{,-stable-1576089840}`
+      ln -s VSCode-linux-x64-stable-1576089840 VSCode`
+      cd ~/bin`
+      ln -s ~/Apps/VSCode/bin/code ./`
+      ```
+
 7. install miniconda (64bit, Python 3.7) to `~/Apps/` and init to bash shell
-   1. https://docs.conda.io/en/latest/miniconda.html
+   1. visit https://docs.conda.io/en/latest/miniconda.html
    2. `cd ~/Apps`
    3. `bash ~/Downloads/Miniconda3-latest-Linux-x86_64.sh`
    4. install to `/home/mintadmin/Apps/miniconda3`
@@ -57,10 +63,13 @@
         ```
 
     4. instructions: https://github.com/prjemian/epics-docker/tree/master/n3_synApps#one-time-setup
-    5. `cd ~/bin`
-    6. ` wget https://raw.githubusercontent.com/prjemian/epics-docker/master/n3_synApps/start_xxx.sh`
-    7. ` wget https://raw.githubusercontent.com/prjemian/epics-docker/master/n3_synApps/remove_container.sh`
-    8. `chmod +x start_xxx.sh remove_container.sh`
+
+        ```
+        cd ~/bin`
+        wget https://raw.githubusercontent.com/prjemian/epics-docker/master/n3_synApps/start_xxx.sh`
+        wget https://raw.githubusercontent.com/prjemian/epics-docker/master/n3_synApps/remove_container.sh`
+        chmod +x start_xxx.sh remove_container.sh`
+        ```
 
 10. start IOC sky (in docker)
     1. `start_xxx.sh sky`
@@ -85,13 +94,23 @@
             ```
 
 11. git clone https://github.com/prjemian/bstesting
-    1. `cd ~/Documents`
-    2. `git clone https://github.com/prjemian/bstesting`
+
+    ```
+    cd ~/Documents
+    git clone https://github.com/prjemian/bstesting
+    ```
+ 
 12. create bsmotor conda environment
-    1. `cd bstesting`
-    2. `grep "conda create" README.md`
-    3. `conda create -yn bsmotor bluesky ophyd databroker epics-base ipython -c nsls2forge`
-    4. `conda activate bsmotor`
+
+    ```
+    cd bstesting
+    # show the command to use
+    grep "conda create" README.md
+    # copy from previous output and execute
+    conda create -yn bsmotor bluesky ophyd databroker epics-base ipython -c nsls2forge
+    conda activate bsmotor
+    ```
+
 13. run test3.py
     1.  `./test3.py`
     
@@ -103,6 +122,7 @@
         pong 2:  -0.1 -0.1                                                                                                                                                       
         ping 3:  0.1 0.1                                                                                                                                                         
         m1: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 0.2/0.2 [00:00<00:00,  2.12s/degrees]
+        ^C^C
         ```
 
         1. observe the motor stall during cycle 3 after the *ping* step
