@@ -1,5 +1,7 @@
 # building VM
 
+source: https://github.com/prjemian/bstesting/blob/master/VM-setup.md
+
 1. download `linuxmint-19.2-mate-64bit.iso` from linuxmint.com
    1. visit https://linuxmint.com/release.php?id=35 for release 19.2
    2. choose *MATE (64-bit)*
