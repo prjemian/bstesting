@@ -75,7 +75,15 @@
     1. `start_xxx.sh sky`
     2. note: first time this is run, it downloads all container images from docker
     3. verify that IOC is running
-       1. log into IOC's docker container and use caget from there
+       1. verify docker container is running
+
+            ```
+            (base) mintadmin@mint-19-2-vm:~/Documents/bstesting$ docker ps
+            CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS              PORTS               NAMES
+            258d818439cf        prjemian/synapps-6.1:latest   "bash -c 'while true…"   10 minutes ago      Up 10 minutes                           iocsky
+            ```
+
+       2. log into IOC's docker container and use caget from there to verify IOC is running
 
             ```
             (base) mintadmin@mint-19-2-vm:~/bin$ docker exec -it iocsky bash
@@ -83,14 +91,6 @@
             sky:UPTIME                     00:01:34
             root@mint-19-2-vm:/opt/synApps/support# exit
             exit
-            ```
-
-       2. verify docker container is running
-
-            ```
-            (base) mintadmin@mint-19-2-vm:~/Documents/bstesting$ docker ps
-            CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS              PORTS               NAMES
-            258d818439cf        prjemian/synapps-6.1:latest   "bash -c 'while true…"   10 minutes ago      Up 10 minutes                           iocsky
             ```
 
 11. git clone https://github.com/prjemian/bstesting
