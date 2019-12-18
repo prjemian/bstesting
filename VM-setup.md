@@ -45,21 +45,22 @@
    6. restart terminal session to see `(base) ` prefixed to command line
 8. install and compile EPICS base (get command line tools)
    1. skip this step, we can use ophyd instead
-9.  install docker (via Software Manager: `docker.io` is the package)
-   2. `sudo usermod -a -G docker $USER`
-   3. Restart the VM to finish the docker install
-   4. on restart, you should see any empty list from command `docker ps`
+9. install docker (via Software Manager: `docker.io` is the package)
+   
+   1. `sudo usermod -a -G docker $USER`
+   2. Restart the VM to finish the docker install
+   3. on restart, you should see any empty list from command `docker ps`
 
         ```
         (base) mintadmin@mint-19-2-vm:~$ docker ps
         CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
         ```
 
-    1. instructions: https://github.com/prjemian/epics-docker/tree/master/n3_synApps#one-time-setup
-    2. `cd ~/bin`
-    3. ` wget https://raw.githubusercontent.com/prjemian/epics-docker/master/n3_synApps/start_xxx.sh`
-    4. ` wget https://raw.githubusercontent.com/prjemian/epics-docker/master/n3_synApps/remove_container.sh`
-    5. `chmod +x start_xxx.sh remove_container.sh`
+    4. instructions: https://github.com/prjemian/epics-docker/tree/master/n3_synApps#one-time-setup
+    5. `cd ~/bin`
+    6. ` wget https://raw.githubusercontent.com/prjemian/epics-docker/master/n3_synApps/start_xxx.sh`
+    7. ` wget https://raw.githubusercontent.com/prjemian/epics-docker/master/n3_synApps/remove_container.sh`
+    8. `chmod +x start_xxx.sh remove_container.sh`
 
 10. start IOC sky (in docker)
     1. `start_xxx.sh sky`
