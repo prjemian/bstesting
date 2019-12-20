@@ -12,9 +12,10 @@ import os
 import sys
 import time
 
-# logger = logging.getLogger('ophyd.event_dispatcher')
-logger = logging.getLogger('ophyd.signal')
-logger.setLevel("DEBUG")
+# ophyd.event_dispatcher
+for _nm in "ophyd.signal ophyd.epics_motor".split():
+    logger = logging.getLogger(_nm)
+    logger.setLevel("DEBUG")
 
 
 if len(sys.argv) == 1:
