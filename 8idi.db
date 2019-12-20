@@ -1,0 +1,12 @@
+# file: 8idi.db
+#
+# purpose: database for testing TimeoutError from PyEpics
+#
+# usage: softIoc -d 8idi.db
+
+record(ao, "8idi:Reg200") {
+    field("DESC", "number register 200")
+    field("VAL", 0)
+    field("EGU", "none")
+    field("PREC", 3)
+}
