@@ -19,7 +19,7 @@ import sys
 import time
 
 # ophyd.event_dispatcher
-for _nm in "ophyd.signal ophyd.epics_motor ophyd.positioner ophyd.ophydobj".split():
+for _nm in "ophyd.signal ophyd.status ophyd.epics_motor ophyd.positioner ophyd.ophydobj".split():
     logger = logging.getLogger(_nm)
     logger.setLevel("DEBUG")
 
