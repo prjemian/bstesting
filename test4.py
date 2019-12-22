@@ -19,7 +19,7 @@ import sys
 import time
 
 # ophyd.event_dispatcher
-for _nm in "ophyd.signal ophyd.epics_motor".split():
+for _nm in "ophyd.signal ophyd.epics_motor ophyd.positioner ophyd.ophydobj".split():
     logger = logging.getLogger(_nm)
     logger.setLevel("DEBUG")
 
@@ -61,6 +61,9 @@ def ping_pong(signal, v1, v2, delay_s=1e-2):
 
 
 if __name__ == "__main__":
+    for item in (bluesky, ophyd, epics):
+        print(item.__name__, item.__version__)
+
     RE(
         bps.repeater(
             CYCLES,
