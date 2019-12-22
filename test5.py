@@ -13,7 +13,6 @@ import os
 import sys
 import time
 
-# ophyd.event_dispatcher
 for _nm in "epics epics.ca epics.pv".split():
     logger = logging.getLogger(_nm)
     logger.setLevel("DEBUG")
@@ -33,18 +32,18 @@ pv.wait_for_connection()
 
 
 def move(signal, label, dest, delay_s):
-    signal.put(dest, timeout=TIMEOUT)
+    signal.put(dest, timeout=TIMEOUT, use_complete=True)
     info = signal.get_with_metadata()
     if info is None:
         raise TimeoutError("timeout")
-    print(f"{datetime.datetime.now()}: {label}:  {dest} {signal.value}")
+    print(f"{datetime.datetime.now()}: {label}:  {dest} {signal.value} {info['value']}")
     time.sleep(delay_s)
 
 i = 0
-def ping_pong(signal, v1, v2, delay_s=1e-2):
+def stepper(signal, delay_s=1e-2):
     global i
-    move(signal, f"ping {i+1}", v1, delay_s)
-    move(signal, f"pong {i+1}", v2, delay_s)
+    for j in range(5):
+        move(signal, f"#{i+1}", j, delay_s)
     i += 1
 
 
@@ -52,6 +51,6 @@ if __name__ == "__main__":
     print(epics.__name__, epics.__version__)
 
     for cycle in range(CYCLES):
-        ping_pong(pv, .1, -.1, delay_s=DELAY_S)
+        stepper(pv, delay_s=DELAY_S)
 
     print(epics.__name__, epics.__version__)
