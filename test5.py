@@ -8,7 +8,6 @@ see: https://github.com/bluesky/ophyd/issues/776
 
 import datetime
 import epics
-import itertools
 import logging
 import os
 import sys
@@ -52,7 +51,7 @@ def ping_pong(signal, v1, v2, delay_s=1e-2):
 if __name__ == "__main__":
     print(epics.__name__, epics.__version__)
 
-    for cycle in itertools.count(CYCLES):
+    for cycle in range(CYCLES):
         ping_pong(pv, .1, -.1, delay_s=DELAY_S)
 
     print(epics.__name__, epics.__version__)
