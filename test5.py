@@ -36,14 +36,14 @@ def move(signal, label, dest, delay_s):
     info = signal.get_with_metadata()
     if info is None:
         raise TimeoutError("timeout")
-    print(f"{datetime.datetime.now()}: {label}:  {dest} {signal.get()} {info['value']}")
+    print(f"{datetime.datetime.now()}: {label}:  {dest} {signal.get()}")
     time.sleep(delay_s)
 
 i = 0
-def stepper(signal, delay_s=1e-2):
+def ping_pong(signal, v1, v2, delay_s=1e-2):
     global i
-    for j in range(5):
-        move(signal, f"#{i+1}", j, delay_s)
+    move(signal, f"ping {i+1}", v1, delay_s)
+    move(signal, f"pong {i+1}", v2, delay_s)
     i += 1
 
 
@@ -51,6 +51,6 @@ if __name__ == "__main__":
     print(epics.__name__, epics.__version__)
 
     for cycle in range(CYCLES):
-        stepper(pv, delay_s=DELAY_S)
+        ping_pong(pv, .1, -.1, delay_s=DELAY_S)
 
     print(epics.__name__, epics.__version__)
