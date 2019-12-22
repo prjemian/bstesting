@@ -32,11 +32,11 @@ pv.wait_for_connection()
 
 
 def move(signal, label, dest, delay_s):
-    signal.put(dest, timeout=TIMEOUT, use_complete=True)
+    signal.put(dest, timeout=TIMEOUT, wait=True)
     info = signal.get_with_metadata()
     if info is None:
         raise TimeoutError("timeout")
-    print(f"{datetime.datetime.now()}: {label}:  {dest} {signal.value} {info['value']}")
+    print(f"{datetime.datetime.now()}: {label}:  {dest} {signal.get()} {info['value']}")
     time.sleep(delay_s)
 
 i = 0
