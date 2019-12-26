@@ -30,7 +30,7 @@ if len(sys.argv) == 1:
     CYCLES = 10
 elif len(sys.argv) == 2:
     CYCLES = int(sys.argv[1])
-DELAY_S = 1e-6
+DELAY_S = 0.002e-3
 MOTOR_PV = "sky:m1"
 # MOTOR_PV = "prj:m1"
 
@@ -49,9 +49,12 @@ m1 = ophyd.EpicsMotor(MOTOR_PV, name="m1")
 m1.wait_for_connection()
 
 
+def when_move_ends(obj):
+    print(datetime.datetime.now(), f"move ended: m1:{obj.position}")
+
 def move(motor, label, dest, delay_s):
     yield from bps.checkpoint()
-    yield from bps.mv(m1, dest)
+    yield from bps.mv(m1, dest, moved_cb=when_move_ends)
     msg = f"{label}:  {dest} {motor.position}"
     print(datetime.datetime.now(), msg)
     yield from bps.sleep(delay_s)
