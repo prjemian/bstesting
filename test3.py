@@ -13,7 +13,6 @@ import sys
 import time
 
 DEBUG_MODULES = [
-    "bluesky.run_engine",
     "ophyd.epics_motor",
     "ophyd.positioner",
     "ophyd.signal",
