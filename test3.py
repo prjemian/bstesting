@@ -30,7 +30,7 @@ if len(sys.argv) == 1:
     CYCLES = 10
 elif len(sys.argv) == 2:
     CYCLES = int(sys.argv[1])
-DELAY_S = 0.002e-3
+DELAY_S = 0.002e-1
 MOTOR_PV = "sky:m1"
 # MOTOR_PV = "prj:m1"
 
