@@ -12,11 +12,19 @@ import os
 import sys
 import time
 
-# ophyd.event_dispatcher
-# 
-for _nm in "ophyd.signal ophyd.epics_motor ophyd.positioner ophyd.ophydobj ophyd.status".split():
+DEBUG_MODULES = [
+    "bluesky.run_engine",
+    "ophyd.epics_motor",
+    "ophyd.positioner",
+    "ophyd.signal",
+    "ophyd.status",
+    "ophyd.ophydobj",
+    # "ophyd.event_dispatcher",
+    __name__        # always last
+]
+for _nm in DEBUG_MODULES:
     logger = logging.getLogger(_nm)
-    logger.setLevel("DEBUG")
+    logger.setLevel(logging.DEBUG)
 
 
 if len(sys.argv) == 1:
@@ -32,6 +40,7 @@ sd = bluesky.SupplementalData()
 pbar_manager = ProgressBarManager()
 
 RE = bluesky.RunEngine({})
+RE.log.setLevel(logging.DEBUG)
 RE.subscribe(bec)
 RE.preprocessors.append(sd)
 RE.waiting_hook = pbar_manager
