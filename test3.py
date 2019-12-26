@@ -26,11 +26,12 @@ for _nm in DEBUG_MODULES:
     logger.setLevel(logging.DEBUG)
 
 
-if len(sys.argv) == 1:
-    CYCLES = 10
-elif len(sys.argv) == 2:
-    CYCLES = int(sys.argv[1])
+CYCLES = 10
 DELAY_S = 0.002e-1
+if len(sys.argv) > 1:
+    CYCLES = int(sys.argv[1])
+    if len(sys.argv) == 3:
+        DELAY_S = float(sys.argv[2])
 MOTOR_PV = "sky:m1"
 # MOTOR_PV = "prj:m1"
 
