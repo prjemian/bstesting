@@ -33,6 +33,7 @@ if len(sys.argv) > 1:
     if len(sys.argv) == 3:
         DELAY_S = float(sys.argv[2])
 MOTOR_PV = "sky:m1"
+MOTOR2_PV = "sky:m2"
 # MOTOR_PV = "prj:m1"
 
 bec = BestEffortCallback()
@@ -47,15 +48,21 @@ RE.waiting_hook = pbar_manager
 
 
 m1 = ophyd.EpicsMotor(MOTOR_PV, name="m1")
+m2 = ophyd.EpicsMotor(MOTOR2_PV, name="m2")
 m1.wait_for_connection()
+m2.wait_for_connection()
 
 
 def when_move_ends(obj):
-    print(datetime.datetime.now(), f"move ended: m1:{obj.position}")
+    print(datetime.datetime.now(), f"move ended: {obj.name}:{obj.position}")
 
 def move(motor, label, dest, delay_s):
     yield from bps.checkpoint()
-    yield from bps.mv(m1, dest, moved_cb=when_move_ends)
+    yield from bps.mv(
+        motor, dest, 
+        m2, -dest, 
+        moved_cb=when_move_ends
+        )
     msg = f"{label}:  {dest} {motor.position}"
     print(datetime.datetime.now(), msg)
     yield from bps.sleep(delay_s)
