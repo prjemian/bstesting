@@ -23,6 +23,12 @@ for _nm in "ophyd.signal ophyd.status ophyd.epics_motor ophyd.positioner ophyd.o
     logger = logging.getLogger(_nm)
     logger.setLevel("DEBUG")
 
+ophyd.EpicsSignal.set_default_timeout(
+    timeout=60, 
+    read_retries=5, 
+    floor=10,
+    )
+
 
 if len(sys.argv) == 1:
     CYCLES = 10
