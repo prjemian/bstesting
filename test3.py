@@ -26,6 +26,13 @@ for _nm in DEBUG_MODULES:
     logger.setLevel(logging.DEBUG)
 
 
+ophyd.EpicsSignal.set_default_timeout(
+    timeout=60, 
+    read_retries=5, 
+    floor=10,
+    )
+
+
 CYCLES = 10
 DELAY_S = 0.002e-1
 if len(sys.argv) > 1:
@@ -61,10 +68,10 @@ def move(motor, label, dest, delay_s):
     yield from bps.mv(
         motor, dest, 
         m2, -dest, 
-        moved_cb=when_move_ends
+        # moved_cb=when_move_ends
         )
     msg = f"{label}:  {dest} {motor.position}"
-    print(datetime.datetime.now(), msg)
+    print(datetime.datetime.now(), msg, "\n#", "-"*30)
     yield from bps.sleep(delay_s)
 
 i = 0
