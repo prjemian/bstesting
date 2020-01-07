@@ -35,6 +35,10 @@ if len(sys.argv) == 1:
 elif len(sys.argv) == 2:
     CYCLES = int(sys.argv[1])
 DELAY_S = 1e-6
+if len(sys.argv) > 1:
+    CYCLES = int(sys.argv[1])
+    if len(sys.argv) == 3:
+        DELAY_S = float(sys.argv[2])
 TEST_PV = "8idi:Reg200"
 
 bec = BestEffortCallback()
@@ -42,6 +46,7 @@ sd = bluesky.SupplementalData()
 pbar_manager = ProgressBarManager()
 
 RE = bluesky.RunEngine({})
+RE.log.setLevel(logging.DEBUG)
 RE.subscribe(bec)
 RE.preprocessors.append(sd)
 RE.waiting_hook = pbar_manager
@@ -55,7 +60,7 @@ def move(signal, label, dest, delay_s):
     yield from bps.checkpoint()
     yield from bps.mv(signal, dest)
     msg = f"{label}:  {dest} {signal.value}"
-    print(datetime.datetime.now(), msg)
+    print(datetime.datetime.now(), msg, "\n#", "-"*30)
     yield from bps.sleep(delay_s)
 
 i = 0
