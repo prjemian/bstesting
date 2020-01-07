@@ -39,9 +39,13 @@ if len(sys.argv) > 1:
     CYCLES = int(sys.argv[1])
     if len(sys.argv) == 3:
         DELAY_S = float(sys.argv[2])
-MOTOR_PV = "sky:m1"
-MOTOR2_PV = "sky:m2"
+# MOTOR_PV = "sky:m1"
+# MOTOR2_PV = "sky:m2"
 # MOTOR_PV = "prj:m1"
+MOTOR_PV = "8idi:m25"
+# NOTE: do not move more than +/- 10 mm from current position (-46)
+MOTOR_BASE_POSITION = -46
+MOTOR_OFFSET = 0.1
 
 bec = BestEffortCallback()
 sd = bluesky.SupplementalData()
@@ -55,9 +59,9 @@ RE.waiting_hook = pbar_manager
 
 
 m1 = ophyd.EpicsMotor(MOTOR_PV, name="m1")
-m2 = ophyd.EpicsMotor(MOTOR2_PV, name="m2")
+# m2 = ophyd.EpicsMotor(MOTOR2_PV, name="m2")
 m1.wait_for_connection()
-m2.wait_for_connection()
+# m2.wait_for_connection()
 
 
 def when_move_ends(obj):
@@ -67,7 +71,7 @@ def move(motor, label, dest, delay_s):
     yield from bps.checkpoint()
     yield from bps.mv(
         motor, dest, 
-        m2, -dest, 
+        # m2, -dest, 
         # moved_cb=when_move_ends
         )
     msg = f"{label}:  {dest} {motor.position}"
@@ -88,8 +92,8 @@ if __name__ == "__main__":
             CYCLES,
             ping_pong,
             m1, 
-            .1, 
-            -.1, 
+            MOTOR_BASE_POSITION + MOTOR_OFFSET, 
+            MOTOR_BASE_POSITION - MOTOR_OFFSET, 
             delay_s=DELAY_S,
             )
     )
