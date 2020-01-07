@@ -137,3 +137,6 @@ dmypy.json
 
 # session logs
 ipython_*.log*
+
+# wireshark captures
+*.pcapng
