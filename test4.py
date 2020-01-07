@@ -24,8 +24,8 @@ for _nm in "ophyd.signal ophyd.status ophyd.epics_motor ophyd.positioner ophyd.o
     logger.setLevel("DEBUG")
 
 ophyd.EpicsSignal.set_default_timeout(
-    timeout=60, 
-    read_retries=5, 
+    timeout=10.0, 
+    read_retries=0,
     floor=10,
     )
 
