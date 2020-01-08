@@ -39,7 +39,7 @@ def move(signal, label, dest, delay_s):
     if info is None:
         raise TimeoutError("timeout")
     print(
-        f"{datetime.datetime.now()} "
+        f"MOVE: {datetime.datetime.now()} "
         f"{label}:  {dest} {signal.get()}  {dt:.6f}"
         "\n# ----------------------------------"
     )

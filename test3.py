@@ -77,7 +77,7 @@ def move(motor, label, dest, delay_s):
         )
     dt = time.time() - t0
     print(
-        f"{datetime.datetime.now()} "
+        f"MOVE: {datetime.datetime.now()} "
         f"{label}:  {dest} {motor.position}  {dt:.6f}"
         "\n# ----------------------------------"
     )
