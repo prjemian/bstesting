@@ -51,17 +51,18 @@ RE.subscribe(bec)
 RE.preprocessors.append(sd)
 RE.waiting_hook = pbar_manager
 
-
 pv = ophyd.EpicsSignal(TEST_PV, name="pv")
 pv.wait_for_connection()
 
 
 def move(signal, label, dest, delay_s):
     yield from bps.checkpoint()
+    t0 = time.time()
     yield from bps.mv(signal, dest)
+    dt = time.time() - t0
     print(
         f"{datetime.datetime.now()} "
-        f"{label}:  {dest} {signal.value}"
+        f"{label}:  {dest} {signal.value}  {dt:.6f}"
         "\n# ----------------------------------"
     )
     yield from bps.sleep(delay_s)
