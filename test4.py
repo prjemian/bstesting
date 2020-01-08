@@ -51,6 +51,7 @@ RE.subscribe(bec)
 RE.preprocessors.append(sd)
 RE.waiting_hook = pbar_manager
 
+# ophyd.set_cl('caproto') # use caproto instead of PyEpics
 pv = ophyd.EpicsSignal(TEST_PV, name="pv")
 pv.wait_for_connection()
 
