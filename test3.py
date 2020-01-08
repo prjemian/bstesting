@@ -69,13 +69,18 @@ def when_move_ends(obj):
 
 def move(motor, label, dest, delay_s):
     yield from bps.checkpoint()
+    t0 = time.time()
     yield from bps.mv(
         motor, dest, 
         # m2, -dest, 
         # moved_cb=when_move_ends
         )
-    msg = f"{label}:  {dest} {motor.position}"
-    print(datetime.datetime.now(), msg, "\n#", "-"*30)
+    dt = time.time() - t0
+    print(
+        f"{datetime.datetime.now()} "
+        f"{label}:  {dest} {motor.position}  {dt:.6f}"
+        "\n# ----------------------------------"
+    )
     yield from bps.sleep(delay_s)
 
 i = 0
