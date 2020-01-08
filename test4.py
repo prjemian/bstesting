@@ -25,8 +25,8 @@ for _nm in "ophyd.signal ophyd.status ophyd.epics_motor ophyd.positioner ophyd.o
 
 ophyd.EpicsSignal.set_default_timeout(
     timeout=10.0, 
-    read_retries=0,
-    floor=10,
+    read_retries=5,
+    floor=2.0,
     )
 
 
@@ -59,8 +59,11 @@ pv.wait_for_connection()
 def move(signal, label, dest, delay_s):
     yield from bps.checkpoint()
     yield from bps.mv(signal, dest)
-    msg = f"{label}:  {dest} {signal.value}"
-    print(datetime.datetime.now(), msg, "\n#", "-"*30)
+    print(
+        f"{datetime.datetime.now()} "
+        f"{label}:  {dest} {signal.value}"
+        "\n# ----------------------------------"
+    )
     yield from bps.sleep(delay_s)
 
 i = 0
