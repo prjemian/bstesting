@@ -39,10 +39,10 @@ if len(sys.argv) > 1:
     CYCLES = int(sys.argv[1])
     if len(sys.argv) == 3:
         DELAY_S = float(sys.argv[2])
-# MOTOR_PV = "sky:m1"
+MOTOR_PV = "sky:m1"
 # MOTOR2_PV = "sky:m2"
 # MOTOR_PV = "prj:m1"
-MOTOR_PV = "8idi:m25"
+# MOTOR_PV = "8idi:m25"
 # NOTE: do not move more than +/- 10 mm from current position (-46)
 MOTOR_BASE_POSITION = -46
 MOTOR_OFFSET = 0.1
@@ -58,6 +58,7 @@ RE.preprocessors.append(sd)
 RE.waiting_hook = pbar_manager
 
 
+# ophyd.set_cl('caproto') # use caproto instead of PyEpics
 m1 = ophyd.EpicsMotor(MOTOR_PV, name="m1")
 # m2 = ophyd.EpicsMotor(MOTOR2_PV, name="m2")
 m1.wait_for_connection()
@@ -77,8 +78,8 @@ def move(motor, label, dest, delay_s):
         )
     dt = time.time() - t0
     print(
-        f"MOVE: {datetime.datetime.now()} "
-        f"{label}:  {dest} {motor.position}  {dt:.6f}"
+        f"\n{datetime.datetime.now()} "
+        f"MOVE: {label}:  {dest} {motor.position}  {dt:.6f}"
         "\n# ----------------------------------"
     )
     yield from bps.sleep(delay_s)

@@ -62,8 +62,8 @@ def move(signal, label, dest, delay_s):
     yield from bps.mv(signal, dest)
     dt = time.time() - t0
     print(
-        f"MOVE: {datetime.datetime.now()} "
-        f"{label}:  {dest} {signal.value}  {dt:.6f}"
+        f"{datetime.datetime.now()} "
+        f"MOVE: {label}:  {dest} {signal.value}  {dt:.6f}"
         "\n# ----------------------------------"
     )
     yield from bps.sleep(delay_s)
