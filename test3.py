@@ -26,6 +26,7 @@ for _nm in DEBUG_MODULES:
     logger.setLevel(logging.DEBUG)
 
 
+# ophyd.set_cl('caproto') # use caproto instead of PyEpics
 ophyd.EpicsSignal.set_default_timeout(
     timeout=60, 
     read_retries=5, 
@@ -58,7 +59,6 @@ RE.preprocessors.append(sd)
 RE.waiting_hook = pbar_manager
 
 
-# ophyd.set_cl('caproto') # use caproto instead of PyEpics
 m1 = ophyd.EpicsMotor(MOTOR_PV, name="m1")
 # m2 = ophyd.EpicsMotor(MOTOR2_PV, name="m2")
 m1.wait_for_connection()
