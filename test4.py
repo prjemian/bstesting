@@ -59,11 +59,13 @@ pv.wait_for_connection()
 def move(signal, label, dest, delay_s):
     yield from bps.checkpoint()
     t0 = time.time()
-    yield from bps.mv(signal, dest)
+    ret = yield from bps.mv(signal, dest)
     dt = time.time() - t0
     print(
         f"{datetime.datetime.now()} "
         f"MOVE: {label}:  {dest} {signal.value}  {dt:.6f}"
+        # f"MOVE: {label}:  {dest} {ret['data'][signal.name]}  {dt:.6f}"
+        # f"MOVE: {label}:  {dest} {ret}  {dt:.6f}"
         "\n# ----------------------------------"
     )
     yield from bps.sleep(delay_s)
