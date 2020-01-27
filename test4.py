@@ -13,6 +13,7 @@ import bluesky.plan_stubs as bps
 import datetime
 import epics
 import logging
+import math
 import ophyd
 import os
 import sys
@@ -26,8 +27,8 @@ for _nm in "ophyd.signal ophyd.status ophyd.epics_motor ophyd.positioner ophyd.o
 # ophyd.set_cl('caproto') # use caproto instead of PyEpics
 ophyd.EpicsSignal.set_default_timeout(
     timeout=10.0, 
-    read_retries=5,
-    floor=2.0,
+    # read_retries=5,
+    # floor=2.0,
     )
 
 
@@ -61,9 +62,10 @@ def move(signal, label, dest, delay_s):
     t0 = time.time()
     ret = yield from bps.mv(signal, dest)
     dt = time.time() - t0
+    scale = "@"*max(1,int(math.log10(dt)+4))
     print(
         f"{datetime.datetime.now()} "
-        f"MOVE: {label}:  {dest} {signal.value}  {dt:.6f}"
+        f"MOVE: {scale} {label}:  {dest} {signal.value}  {dt:.6f}"
         # f"MOVE: {label}:  {dest} {ret['data'][signal.name]}  {dt:.6f}"
         # f"MOVE: {label}:  {dest} {ret}  {dt:.6f}"
         "\n# ----------------------------------"

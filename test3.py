@@ -7,6 +7,7 @@ import bluesky.plan_stubs as bps
 import datetime
 import epics
 import logging
+import math
 import ophyd
 import os
 import sys
@@ -19,18 +20,14 @@ DEBUG_MODULES = [
     "ophyd.status",
     "ophyd.ophydobj",
     # "ophyd.event_dispatcher",
-    __name__        # always last
-]
-for _nm in DEBUG_MODULES:
-    logger = logging.getLogger(_nm)
-    logger.setLevel(logging.DEBUG)
-
+    __name__,
+    ]
 
 # ophyd.set_cl('caproto') # use caproto instead of PyEpics
 ophyd.EpicsSignal.set_default_timeout(
     timeout=60, 
-    read_retries=5, 
-    floor=10,
+    # read_retries=5, 
+    # floor=10,
     )
 
 
@@ -40,10 +37,10 @@ if len(sys.argv) > 1:
     CYCLES = int(sys.argv[1])
     if len(sys.argv) == 3:
         DELAY_S = float(sys.argv[2])
-MOTOR_PV = "sky:m1"
+# MOTOR_PV = "sky:m1"
 # MOTOR2_PV = "sky:m2"
 # MOTOR_PV = "prj:m1"
-# MOTOR_PV = "8idi:m25"
+MOTOR_PV = "8idi:m25"
 # NOTE: do not move more than +/- 10 mm from current position (-46)
 MOTOR_BASE_POSITION = -46
 MOTOR_OFFSET = 0.1
@@ -77,9 +74,10 @@ def move(motor, label, dest, delay_s):
         # moved_cb=when_move_ends
         )
     dt = time.time() - t0
+    scale = "@"*max(1,int(math.log10(dt)+4))
     print(
         f"\n{datetime.datetime.now()} "
-        f"MOVE: {label}:  {dest} {motor.position}  {dt:.6f}"
+        f"MOVE: {scale} {label}:  {dest} {motor.position}  {dt:.6f}"
         "\n# ----------------------------------"
     )
     yield from bps.sleep(delay_s)
