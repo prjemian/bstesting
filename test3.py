@@ -24,11 +24,7 @@ DEBUG_MODULES = [
     ]
 
 # ophyd.set_cl('caproto') # use caproto instead of PyEpics
-ophyd.EpicsSignal.set_default_timeout(
-    timeout=60, 
-    # read_retries=5, 
-    # floor=10,
-    )
+ophyd.EpicsSignal.set_default_timeout(timeout=60)
 
 
 CYCLES = 10

@@ -25,11 +25,7 @@ for _nm in "ophyd.signal ophyd.status ophyd.epics_motor ophyd.positioner ophyd.o
     logger.setLevel("DEBUG")
 
 # ophyd.set_cl('caproto') # use caproto instead of PyEpics
-ophyd.EpicsSignal.set_default_timeout(
-    timeout=10.0, 
-    # read_retries=5,
-    # floor=2.0,
-    )
+ophyd.EpicsSignal.set_default_timeout(timeout=60)
 
 
 if len(sys.argv) == 1:
